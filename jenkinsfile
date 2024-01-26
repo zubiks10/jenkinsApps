@@ -1,11 +1,37 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean install' // Example Maven build step
+                echo 'Building...'
+                // Add your build commands here
             }
         }
-        // Add other stages and steps as needed
+
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add your test commands here
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add your deployment commands here
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
     }
 }
+    
