@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'GIT_URL', defaultValue: 'https://github.com/zubiks10/jenkinsApps.git', description: 'Git repository URL')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Retrieve the Git repository URL from the parameter
+                    def gitUrl = params.GIT_URL
+
+                    // Checkout the repository using the provided Git URL
+                    checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[url: gitUrl]]])
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add your build commands here
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add your test commands here
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add your deployment commands here
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
+    }
+}
